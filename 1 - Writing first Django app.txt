@@ -1,0 +1,101 @@
+1 - Writing first Django app
+=============================
+From the command line, cd into a directory where you’d like to store your code, then run the following command:
+
+	$ django-admin startproject mysite
+	
+Let’s look at what startproject created:
+
+	mysite/
+		manage.py
+		mysite/
+			__init__.py
+			settings.py
+			urls.py
+			asgi.py
+			wsgi.py
+			
+https://docs.djangoproject.com/en/5.0/intro/tutorial01/ for more info.
+
+
+The development server
+-----------------------
+Let’s verify your Django project works. Change into the outer mysite directory, if you haven’t already, and run the following commands:
+
+	$ python manage.py runserver
+	
+Now that the server’s running, visit http://127.0.0.1:8000/ with your web browser. You’ll see a “Congratulations!” page, with a rocket taking off. It worked!
+
+https://docs.djangoproject.com/en/5.0/intro/tutorial01/ for more info...
+
+
+Creating the Polls app
+------------------------
+Projects vs. apps:
+
+What’s the difference between a project and an app? An app is a web application that does something – e.g., a blog system, a database of public records or a small poll app. A project is a collection of configuration and apps for a particular website. A project can contain multiple apps. An app can be in multiple projects.
+
+To create your app, make sure you’re in the same directory as manage.py and type this command:
+
+	$ python manage.py startapp polls
+	
+That’ll create a directory polls, which is laid out like this:
+	
+	polls/
+		__init__.py
+		admin.py
+		apps.py
+		migrations/
+			__init__.py
+		models.py
+		tests.py
+		views.py
+		
+
+Write your first view
+----------------------
+	from django.http import HttpResponse
+
+	def index(request):
+		return HttpResponse("Hello, world. You're at the polls index.")
+
+To define a URLconf for the polls app, create a file polls/urls.py with the following content:
+
+	from django.urls import path
+
+	from . import views
+
+	urlpatterns = [
+		path("", views.index, name="index"),
+	]
+	
+The next step is to configure the global URLconf in the mysite project to include the URLconf defined in polls.urls. To do this, add an import for django.urls.include in mysite/urls.py and insert an include() in the urlpatterns list, so you have:
+
+	from django.contrib import admin
+	from django.urls import include, path
+
+	urlpatterns = [
+		path("polls/", include("polls.urls")),
+		path("admin/", admin.site.urls),
+	]
+	
+https://docs.djangoproject.com/en/5.0/intro/tutorial01/
+	
+When to use include():
+
+You should always use include() when you include other URL patterns. admin.site.urls is the only exception to this.
+
+The path() function is passed four arguments, two required: route and view, and two optional: kwargs, and name. At this point, it’s worth reviewing what these arguments are for.
+
+
+Summary
+--------
+Set up a Django virtual environment
+
+Create project using this virtual environment
+
+Spin up a development server
+
+Create "Polls" app.
+
+Creates a view in the Polls app and include it's configuration in the main mysite urls.py file/

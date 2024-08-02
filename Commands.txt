@@ -1,0 +1,13 @@
+
+To check if Django is installed:
+
+	python -m django --version
+	
+	
+Setting up a virtual environment
+---------------------------------
+https://docs.djangoproject.com/en/5.0/howto/windows/
+
+Creates virtual environment:
+
+	 python -m venv project-name
